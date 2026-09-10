@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Samuel Boucheron Seguin — Work</title>
+<meta name="description" content="A gallery of software Samuel Boucheron Seguin has built — facial recognition, crowd simulation, full-stack web and browser tooling." />
+<style>
+  :root{
+    --ink:#17150f;
+    --ink-soft:#5f5949;
+    --rule:rgba(23,21,15,.14);
+    --max:1180px;
+    --mono:"SFMono-Regular",ui-monospace,"Cascadia Mono","Roboto Mono",Menlo,Consolas,monospace;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    /* current project accent + tint, updated by JS */
+    --accent:#7a5cff;
+    --tint:#f3f1ea;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0; color:var(--ink); font:17px/1.7 var(--sans);
+       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;}
+
+  /* fixed background layer that fades between project tints */
+  .bg{position:fixed; inset:0; z-index:-1; background:var(--tint);
+      transition:background-color 1.1s ease;}
+
+  a{color:var(--accent); text-decoration:none; text-underline-offset:3px; transition:color .5s ease}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 40px}
+  @media(max-width:640px){.wrap{padding:0 22px}}
+
+  /* top bar */
+  .topbar{position:fixed; left:0; right:0; top:0; z-index:40; backdrop-filter:blur(8px);
+          background:rgba(14,12,8,.5); border-bottom:1px solid rgba(255,255,255,.1)}
+  .topbar .wrap{display:flex; justify-content:space-between; align-items:center; padding:15px 40px; max-width:none}
+  @media(max-width:640px){.topbar .wrap{padding:14px 22px}}
+  .topbar .mark{font:600 .8rem/1 var(--mono); letter-spacing:.14em; text-transform:uppercase; color:#fff;
+                text-shadow:0 1px 12px rgba(0,0,0,.4)}
+  .topbar .accent-dot{display:inline-block; width:9px; height:9px; border-radius:50%;
+                      background:var(--accent); margin-right:10px; transition:background-color .6s ease}
+  .topbar nav{display:flex; gap:26px; font:600 .8rem/1 var(--mono)}
+  .topbar nav a{color:rgba(255,255,255,.72)}
+  .topbar nav a:hover{color:#fff}
+  @media(max-width:640px){.topbar nav{display:none}}
+
+  /* hero */
+  header.hero{padding:96px 0 70px}
+  .hero .kicker{font:600 .8rem/1 var(--mono); letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:24px}
+  .hero .name{font:600 clamp(2.9rem,9.2vw,7rem)/.95 var(--serif); letter-spacing:-.025em; margin:0 0 0 -.03em}
+  .hero .name .ln{display:block; overflow:hidden; padding-bottom:.04em}
+  .hero .name .ln > span{display:block; transform:translateY(105%);
+    animation:lineUp 1.05s cubic-bezier(.2,.72,.2,1) forwards}
+  .hero .name .ln:nth-child(1) > span{animation-delay:1.12s}
+  .hero .name .ln:nth-child(2) > span{animation-delay:1.24s}
+  .hero .role{margin-top:30px; max-width:22ch; font:500 clamp(1.3rem,3vw,2rem)/1.15 var(--serif); letter-spacing:-.01em}
+  .hero .lede{margin-top:22px; max-width:56ch; font-size:1.12rem; color:#2b271e}
+  .hero .lede strong{color:var(--ink); font-weight:600}
+  .hero .scroll-hint{margin-top:46px; font:600 .78rem/1 var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft)}
+  .hero .scroll-hint::after{content:" ↓"; color:var(--accent)}
+
+  /* project = full-bleed cinematic panel: media fills the screen, text sits in the lower third */
+  .project{position:relative; overflow:hidden; padding:0; border-top:0;
+           min-height:100vh; min-height:100svh; display:flex; align-items:flex-end}
+  .project > .wrap{position:static; width:100%; padding-bottom:11vh}
+  @media(max-width:860px){.project > .wrap{padding-bottom:14vh}}
+
+  /* the media fills the entire panel and is oversized so it can drift (parallax) without gaps */
+  .frame-col{position:absolute; inset:0; z-index:0; margin:0}
+  .frame{position:absolute; left:0; right:0; top:-9%; height:118%;
+         background:#0b0a08; overflow:hidden; will-change:transform}
+  /* cinematic scrim: a vignette plus a dark blob anchored under the text, so the white
+     overlay stays legible even over bright screenshots (e.g. the crowd sim / PHP UI). */
+  .frame::before{content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:
+      radial-gradient(125% 85% at 10% 104%, rgba(8,7,5,.9) 0%, rgba(8,7,5,.62) 30%, rgba(8,7,5,0) 60%),
+      linear-gradient(180deg, rgba(8,7,5,.4) 0%, rgba(8,7,5,.05) 24%, rgba(8,7,5,.24) 52%, rgba(8,7,5,.82) 80%, rgba(8,7,5,.97) 100%),
+      linear-gradient(90deg, rgba(8,7,5,.72) 0%, rgba(8,7,5,.14) 44%, rgba(8,7,5,0) 70%)}
+  .frame .ph-tag{position:absolute; top:15vh; left:max(40px, calc((100vw - var(--max))/2 + 40px));
+                 font:700 .68rem/1 var(--mono); letter-spacing:.1em; text-transform:uppercase;
+                 color:#fff; background:var(--accent); padding:6px 9px;
+                 transition:background-color .6s ease; z-index:3}
+  @media(max-width:640px){.frame .ph-tag{left:22px; top:13vh}}
+  .frame img.shot{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block}
+  .frame img.shot.contain{object-fit:contain}
+  /* small honesty caption, pinned to the panel's bottom-right corner (stays put; doesn't parallax) */
+  .frame-cap{position:absolute; right:max(40px, calc((100vw - var(--max))/2 + 40px)); bottom:5vh; z-index:2;
+             max-width:32ch; text-align:right; font:600 .72rem/1.5 var(--mono);
+             color:rgba(255,255,255,.58); letter-spacing:.02em}
+  @media(max-width:860px){.frame-cap{display:none}}
+  /* code-snippet panel (project with no screenshot) */
+  .frame.code{background:#100e0a; display:flex; align-items:center; justify-content:center}
+  .frame.code pre{margin:0; padding:0; width:min(680px,86vw); overflow:hidden;
+                  font:clamp(12px,1.5vw,15px)/1.75 var(--mono); color:#e8e2d2; text-align:left}
+  .frame.code .k{color:#e0a458} .frame.code .f{color:#7fb2ff}
+  .frame.code .s{color:#9ad08f} .frame.code .c{color:#8a8574}
+
+  /* text overlay — sits in the lower third, over the media */
+  .txt-col{position:relative; z-index:2; padding-top:0; color:#fff; text-shadow:0 1px 30px rgba(0,0,0,.35)}
+  .p-idx{font:600 .82rem/1 var(--mono); color:#fff; letter-spacing:.14em}
+  .p-idx::before{content:""; display:inline-block; width:26px; height:2px; margin-right:12px;
+                 vertical-align:middle; background:var(--accent); transition:background-color .6s ease}
+  .p-title{font:500 clamp(2.1rem,5.2vw,4rem)/1.03 var(--serif); letter-spacing:-.015em;
+           margin:16px 0 0; color:#fff; max-width:18ch}
+  .p-grade{font:700 .7rem/1 var(--mono); color:#fff; background:var(--accent); padding:5px 8px;
+           margin-left:12px; vertical-align:middle; letter-spacing:.04em; transition:background-color .6s ease}
+  .p-meta{font:600 .78rem/1.5 var(--mono); letter-spacing:.06em; color:rgba(255,255,255,.72);
+          margin:16px 0 16px; text-transform:uppercase}
+  .p-meta a{color:#fff; text-decoration:underline; text-underline-offset:3px;
+            text-decoration-thickness:1px; text-decoration-color:var(--accent)}
+  .p-body{max-width:52ch}
+  .p-body p{margin:0 0 14px; font-size:1.08rem; color:rgba(255,255,255,.92)}
+  .p-body em{font-style:italic}
+  .p-body ul{display:none}   /* fuller detail lives in the modal — keep the panel cinematic */
+  .p-body strong{font-weight:700; color:#fff}
+  .p-stack{display:flex; flex-wrap:wrap; gap:8px; margin-top:6px}
+  .p-stack .chip{font:600 .74rem/1 var(--mono); color:rgba(255,255,255,.85);
+                 border:1px solid rgba(255,255,255,.32); padding:6px 10px; backdrop-filter:blur(2px)}
+  .p-links{margin-top:16px; font:600 .84rem/1 var(--mono)}
+  .p-links a{color:#fff}
+  .p-links a::after{content:" ↗"}
+
+  /* contact */
+  footer{border-top:2px solid var(--ink); padding:70px 0 80px; margin-top:40px}
+  footer h2{font:500 clamp(2.2rem,5vw,3.4rem)/1.05 var(--serif); letter-spacing:-.01em; margin:0 0 30px}
+  footer h2 a{color:var(--accent)}
+  .foot-links{display:flex; gap:14px 40px; flex-wrap:wrap; font:600 .88rem/1 var(--mono)}
+  .foot-links a{color:var(--ink)}
+  .foot-note{margin-top:40px; display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+             font:600 .76rem/1.6 var(--mono); color:var(--ink-soft); letter-spacing:.03em; text-transform:uppercase}
+
+  /* ---------- cinematic reveal ---------- */
+  /* media fades up; text staggers into the lower third. (Parallax drift is driven by JS,
+     so the media reveal uses opacity only — never a transform — to avoid fighting it.) */
+  .txt-col > *, .frame-cap{opacity:0; transform:translateY(38px);
+    transition:opacity 1.05s cubic-bezier(.2,.72,.2,1), transform 1.05s cubic-bezier(.2,.72,.2,1)}
+  .frame{opacity:0; transition:opacity 1.25s cubic-bezier(.2,.72,.2,1)}
+  .project.in-view .txt-col > *, .project.in-view .frame-cap{opacity:1; transform:none}
+  .project.in-view .frame{opacity:1}
+  .project.in-view .txt-col > *:nth-child(1){transition-delay:.06s}
+  .project.in-view .txt-col > *:nth-child(2){transition-delay:.14s}
+  .project.in-view .txt-col > *:nth-child(3){transition-delay:.22s}
+  .project.in-view .txt-col > *:nth-child(4){transition-delay:.3s}
+  .project.in-view .frame-cap{transition-delay:.4s}
+
+  /* slow Ken Burns drift on the screenshots (inner img — independent of the frame's parallax) */
+  .frame.has-img .shot{animation:kenburns 24s ease-in-out infinite alternate; will-change:transform}
+  @keyframes kenburns{from{transform:scale(1.07) translate(-.6%, .6%)}
+                       to{transform:scale(1.17) translate(.6%, -.8%)}}
+
+  /* hero entrance on load (timed to follow the intro curtain lifting) */
+  .hero .kicker,.hero .role,.hero .lede,.hero .scroll-hint{opacity:0; transform:translateY(26px);
+    animation:heroIn 1s cubic-bezier(.2,.72,.2,1) forwards}
+  .hero .kicker{animation-delay:1.05s} .hero .role{animation-delay:1.32s}
+  .hero .lede{animation-delay:1.46s} .hero .scroll-hint{animation-delay:1.6s}
+  @keyframes heroIn{to{opacity:1; transform:none}}
+  @keyframes lineUp{to{transform:none}}
+
+  @media (prefers-reduced-motion: reduce){
+    .txt-col > *,.frame,.frame-cap,
+    .hero .kicker,.hero .role,.hero .lede,.hero .scroll-hint,
+    .hero .name .ln > span{
+      opacity:1 !important; transform:none !important; animation:none !important; transition:none !important}
+    .frame.has-img .shot{animation:none}
+    .bg{transition:none}
+    .intro{display:none}
+    .cursor-dot,.cursor-ring{display:none}
+  }
+
+  /* ---------- details button + modal ---------- */
+  .details-btn{margin-top:24px; display:inline-flex; align-items:center; gap:9px; cursor:pointer;
+    font:600 .82rem/1 var(--mono); letter-spacing:.04em; color:var(--accent);
+    background:transparent; border:1px solid var(--accent); padding:13px 20px;
+    transition:opacity .9s cubic-bezier(.2,.72,.2,1), transform .9s cubic-bezier(.2,.72,.2,1),
+               background-color .2s ease, color .2s ease}
+  .details-btn::after{content:"→"; transition:transform .2s ease}
+  .details-btn:hover{background:var(--accent); color:#fff}
+  .details-btn:hover::after{transform:translateX(4px)}
+  .details-data{display:none}
+
+  .modal{position:fixed; inset:0; z-index:50; display:none}
+  .modal.open{display:block}
+  .modal-backdrop{position:absolute; inset:0; background:rgba(14,12,8,.62);
+    -webkit-backdrop-filter:blur(7px); backdrop-filter:blur(7px); opacity:0; transition:opacity .4s ease}
+  .modal.open .modal-backdrop{opacity:1}
+  .modal-panel{position:absolute; left:50%; top:50%; transform:translate(-50%,-44%);
+    width:min(760px,92vw); max-height:86vh; overflow:auto; opacity:0;
+    background:#f6f3eb; color:var(--ink); border:1px solid rgba(20,18,12,.18);
+    border-top:4px solid var(--accent); padding:44px 46px 46px;
+    box-shadow:0 40px 90px -30px rgba(10,8,4,.7);
+    transition:transform .5s cubic-bezier(.2,.72,.2,1), opacity .45s ease}
+  @media(max-width:560px){.modal-panel{padding:36px 26px 34px}}
+  .modal.open .modal-panel{transform:translate(-50%,-50%); opacity:1}
+  .modal-close{position:sticky; top:0; float:right; margin:-14px -16px 0 0; cursor:pointer;
+    background:transparent; border:0; font:400 1.5rem/1 var(--sans); color:var(--ink-soft)}
+  .modal-close:hover{color:var(--accent)}
+  .modal-eyebrow{font:600 .78rem/1 var(--mono); letter-spacing:.12em; color:var(--accent); margin-bottom:12px}
+  .modal-title{font:500 clamp(1.7rem,3.4vw,2.3rem)/1.1 var(--serif); letter-spacing:-.01em; margin:0 0 8px}
+  .modal-body{margin-top:22px}
+  .modal-body h4{font:600 .74rem/1 var(--mono); letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); margin:26px 0 10px}
+  .modal-body h4:first-child{margin-top:0}
+  .modal-body p{margin:0 0 12px; font-size:1.02rem; line-height:1.65}
+  .modal-body ul{margin:0 0 14px; padding:0; list-style:none}
+  .modal-body li{position:relative; padding-left:22px; margin:8px 0; font-size:1rem; line-height:1.6}
+  .modal-body li::before{content:"—"; position:absolute; left:0; color:var(--accent)}
+  .modal-body strong{font-weight:700}
+  .modal-body code{font:.88em var(--mono); background:rgba(20,18,12,.07); padding:1px 6px; border-radius:3px}
+  .modal-body em{font-style:italic}
+  .modal-body a{color:var(--accent); text-decoration:underline; text-underline-offset:3px;
+    text-decoration-thickness:1px}
+  .modal-body .note{margin-top:18px; font-size:.9rem; color:var(--ink-soft); font-style:italic}
+  .modal-body .dl-links{display:flex; flex-wrap:wrap; gap:18px; margin-top:10px; font:600 .84rem/1 var(--mono)}
+
+  .devnote{position:fixed; bottom:14px; left:50%; transform:translateX(-50%); z-index:30;
+           background:var(--ink); color:#f3f1ea; font:600 .72rem/1.4 var(--mono);
+           padding:9px 14px; border-radius:2px; max-width:90vw; text-align:center;
+           box-shadow:0 10px 30px -12px rgba(0,0,0,.6)}
+  .devnote b{color:#ffd27a}
+
+  /* ---------- custom cursor ---------- */
+  .cursor-dot,.cursor-ring{position:fixed; top:0; left:0; z-index:70; pointer-events:none;
+    border-radius:50%; opacity:0; transition:opacity .3s ease; will-change:transform}
+  .cursor-dot{width:6px; height:6px; background:var(--accent); transition:opacity .3s ease, background-color .5s ease}
+  .cursor-ring{width:40px; height:40px; border:1.5px solid var(--accent);
+    transition:width .28s cubic-bezier(.2,.72,.2,1), height .28s cubic-bezier(.2,.72,.2,1),
+               background-color .28s ease, opacity .3s ease, border-color .5s ease}
+  .cursor-ring.hov{width:66px; height:66px; background:color-mix(in srgb, var(--accent) 12%, transparent)}
+  html.has-cursor.ready .cursor-dot, html.has-cursor.ready .cursor-ring{opacity:1}
+  html.has-cursor, html.has-cursor *{cursor:none !important}
+  @media (hover:none),(pointer:coarse){.cursor-dot,.cursor-ring{display:none !important}}
+
+  /* ---------- load intro curtain ---------- */
+  .intro{position:fixed; inset:0; z-index:80; background:var(--ink); color:#f3f1ea;
+    display:flex; align-items:center; justify-content:center; text-align:center; padding:0 24px;
+    animation:introUp .9s cubic-bezier(.76,0,.24,1) 1.05s forwards}
+  .intro-name{font:500 clamp(1.7rem,5.5vw,3.4rem)/1.05 var(--serif); letter-spacing:.005em;
+    opacity:0; transform:translateY(16px); animation:introName .7s cubic-bezier(.2,.72,.2,1) .2s forwards}
+  .intro-name .accent-dot{display:inline-block; width:10px; height:10px; border-radius:50%;
+    background:var(--accent); margin-left:8px}
+  @keyframes introName{to{opacity:1; transform:none}}
+  @keyframes introUp{to{transform:translateY(-100%); visibility:hidden}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<div class="intro" id="intro"><span class="intro-name">Samuel Boucheron Seguin<span class="accent-dot"></span></span></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="mark"><span class="accent-dot"></span>S. Boucheron Seguin</span>
+    <nav><a href="#work">Work</a><a href="resume.html">Resume</a><a href="#contact">Contact</a></nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">CS Engineering Student · CY Tech Pau</div>
+    <h1 class="name"><span class="ln"><span>Samuel</span></span><span class="ln"><span>Boucheron Seguin</span></span></h1>
+    <p class="role">A library of things I've built.</p>
+    <p class="lede">Facial recognition, crowd simulation, full-stack web, browser tooling:
+      applied maths turned into working software.</p>
+    <div class="scroll-hint">Scroll through the work</div>
+  </div>
+</header>
+
+<main id="work">
+
+  <!-- 01 -->
+  <section class="project" data-accent="#6c4bd6" data-tint="#eee9f7">
+    <div class="wrap">
+      <div class="frame-col">
+        <div class="frame has-img">
+          <span class="ph-tag">01 · Eigenfaces</span>
+          <img class="shot" src="assets/img/fr-eigenfaces-grid.png"
+               alt="Grid of eigenfaces computed from the reduced covariance matrix" />
+        </div>
+        <div class="frame-cap">Real output: the eigenfaces computed by the PCA (output/eigenfaces)</div>
+      </div>
+      <div class="txt-col">
+        <div class="p-idx">01 / EIGENFACES</div>
+        <h2 class="p-title">Facial Recognition with PCA</h2>
+        <div class="p-meta">Technical Lead &amp; Lead Java Dev · 5-person team · CY Tech · 2025–26 <span class="p-grade">16.41/20</span></div>
+        <div class="p-body">
+          <p>A Java/JavaFX system that identifies a person from a photo, or correctly
+            <em>rejects</em> unknown faces, using the classic eigenfaces (PCA) method. I owned
+            the architecture, code conventions and Git strategy, led integration, and
+            implemented the projection and identification algorithms.</p>
+          <ul>
+            <li>Computed eigenfaces from the <strong>reduced covariance matrix (AᵀA)</strong>, making a 40,000-dimension problem tractable.</li>
+            <li>Designed a <strong>three-criterion recognise/reject decision</strong> (Hotelling's T² · reconstruction error · nearest distance), calibrated empirically.</li>
+            <li>Evaluated with confusion matrices across three databases; documented the limits (lighting/pose).</li>
+          </ul>
+          <div class="p-stack">
+            <span class="chip">Java 21</span><span class="chip">JavaFX</span>
+            <span class="chip">PCA / SVD</span><span class="chip">Linear algebra</span><span class="chip">Computer vision</span>
+          </div>
+          <button class="details-btn" type="button">Full details</button>
+          <div class="details-data" hidden>
+            <h4>Context</h4>
+            <p>Five-person team project for the <em>Traitement d'Images</em> module at CY Tech (ING1): a facial-recognition system built on <strong>eigenfaces (PCA)</strong>, entirely in Java with a JavaFX GUI, tested against three databases: the team's own faces, celebrities, and the Yale Face Database.</p>
+            <h4>My role: Technical Lead &amp; Lead Java Developer</h4>
+            <ul>
+              <li>Responsible for the <strong>architecture</strong>: package structure, code conventions and the Git branch strategy, and for integrating the different modules written by the team.</li>
+              <li>Personally implemented the hardest part: the <strong>projection and identification</strong> phases (projecting faces into eigenface space and the multi-criteria recognition decision).</li>
+              <li>Most active on the linear-algebra, recognition and JavaFX files.</li>
+            </ul>
+            <h4>Technical highlights</h4>
+            <ul>
+              <li><strong>Efficient PCA:</strong> eigenfaces computed from the reduced covariance matrix <strong>AᵀA instead of AAᵀ</strong>, cutting compute drastically on 40,000-dimensional images (justified via the spectral theorem).</li>
+              <li><strong>Choosing K:</strong> kept enough eigenfaces for ≥90% cumulative explained variance, and found empirically that <strong>90% beat 98%</strong>.</li>
+              <li><strong>Three-criterion decision</strong> (a face must pass all three): Hotelling's T², reconstruction error (97th percentile), and minimum Euclidean distance, with thresholds calibrated on a 70/30 known–unknown validation base.</li>
+              <li>JavaFX GUI with a live threshold slider; full UML and a GDPR/ethics analysis.</li>
+            </ul>
+            <h4>Outcomes</h4>
+            <p>Reliably recognises known faces and rejects unknown ones when capture conditions are near-identical (evaluated with confusion matrices). Main failure mode: strong lighting and head-tilt variation (a known PCA limit), with accuracy degrading on more varied databases.</p>
+            <p><strong>Stack:</strong> Java 21 · JavaFX 21 · PCA/SVD. After Turk &amp; Pentland (1991).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section class="project" data-accent="#3f7d4f" data-tint="#e8f0e8">
+    <div class="wrap">
+      <div class="frame-col">
+        <div class="frame code">
+          <span class="ph-tag">02 · Python</span>
+<pre><span class="c"># adversarial search — pick the optimal move</span>
+<span class="k">def</span> <span class="f">minimax</span>(board):
+    <span class="k">if</span> terminal(board):
+        <span class="k">return</span> <span class="k">None</span>
+    turn = player(board)
+    best = <span class="f">max</span> <span class="k">if</span> turn == X <span class="k">else</span> <span class="f">min</span>
+    <span class="k">return</span> best(
+        actions(board),
+        key=<span class="k">lambda</span> a: <span class="f">value</span>(result(board, a)),
+    )
+
+<span class="k">def</span> <span class="f">value</span>(board):
+    <span class="k">if</span> terminal(board):
+        <span class="k">return</span> utility(board)
+    scores = [value(result(board, a))
+              <span class="k">for</span> a <span class="k">in</span> actions(board)]
+    <span class="k">return</span> (<span class="f">max</span> <span class="k">if</span> player(board) == X
+            <span class="k">else</span> <span class="f">min</span>)(scores)</pre>
+        </div>
+        <div class="frame-cap">Illustrative excerpt: minimax, from the adversarial-search work</div>
+      </div>
+      <div class="txt-col">
+        <div class="p-idx">02 / STUDY</div>
+        <h2 class="p-title">CS50AI — AI with Python</h2>
+        <div class="p-meta">HarvardX (edX) · ~100h · <a class="p-cert" href="assets/cs50ai-certificate.pdf" target="_blank" rel="noopener">CS50 Certificate ↗</a></div>
+        <div class="p-body">
+          <p>All <strong>twelve projects</strong> implemented in Python — from breadth-first
+            search and minimax through Bayesian networks and constraint satisfaction to
+            Q-learning, a CNN and BERT attention.</p>
+          <div class="p-stack">
+            <span class="chip">Python</span><span class="chip">Search &amp; CSP</span><span class="chip">Bayesian networks</span><span class="chip">TensorFlow</span><span class="chip">NLP</span>
+          </div>
+          <button class="details-btn" type="button">Full details</button>
+          <div class="details-data" hidden>
+            <h4>Context</h4>
+            <p>HarvardX's <strong>CS50AI</strong> (~100 hours), taken solo alongside my engineering degree. I completed <strong>all twelve projects</strong> — the certificate is <a href="assets/cs50ai-certificate.pdf" target="_blank" rel="noopener">here</a> and can be <a href="https://cs50.harvard.edu/certificates/9967840f-4cef-4c00-acfb-d5e71ad7abed" target="_blank" rel="noopener">verified with Harvard ↗</a>.</p>
+            <h4>The twelve projects</h4>
+            <ul>
+              <li><strong>Search</strong> — <em>Degrees</em>: breadth-first search over an actor/movie graph. <em>Tic-Tac-Toe</em>: an unbeatable <strong>minimax</strong> opponent (the excerpt shown).</li>
+              <li><strong>Knowledge</strong> — <em>Knights</em>: logic puzzles encoded as propositional sentences and solved by model checking. <em>Minesweeper</em>: an agent that keeps a knowledge base of sentences over cell sets and infers which squares are safe.</li>
+              <li><strong>Uncertainty</strong> — <em>PageRank</em>: Google's algorithm, implemented both by sampling a Markov chain and by iterating to convergence. <em>Heredity</em>: a Bayesian network inferring gene and trait probabilities across a family tree.</li>
+              <li><strong>Optimization</strong> — <em>Crossword</em>: constraint satisfaction with node/arc consistency (<strong>AC-3</strong>) and backtracking guided by minimum-remaining-values and least-constraining-value heuristics.</li>
+              <li><strong>Learning</strong> — <em>Shopping</em>: a k-nearest-neighbour classifier on real e-commerce sessions, scored on <strong>sensitivity and specificity</strong> because the classes are badly imbalanced. <em>Nim</em>: <strong>Q-learning</strong> — the agent is given no strategy and learns by playing itself.</li>
+              <li><strong>Neural networks</strong> — <em>Traffic</em>: a <strong>convolutional neural network</strong> in TensorFlow/Keras classifying German road signs across 43 categories, with the layer depth, pooling and dropout tuned experimentally.</li>
+              <li><strong>Language</strong> — <em>Parser</em>: a context-free grammar in NLTK parsing English sentences and extracting noun phrases. <em>Attention</em>: masked-word prediction with <strong>BERT</strong>, plus visualising the attention heads to see what each one actually looks at.</li>
+            </ul>
+            <h4>Why it matters to me</h4>
+            <p>The value was the breadth in one continuous line: classical search and logic, then probabilistic reasoning, then classical ML, then deep learning and NLP — each one written from scratch rather than watched.</p>
+            <p><strong>Stack:</strong> Python · NumPy · scikit-learn · TensorFlow/Keras · NLTK.</p>
+            <p class="note">The solutions are not published: CS50's academic-honesty policy asks students not to share their work.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section class="project" data-accent="#c8761c" data-tint="#f8efe1">
+    <div class="wrap">
+      <div class="frame-col">
+        <div class="frame has-img">
+          <span class="ph-tag">03 · Simulation</span>
+          <img class="shot contain" src="assets/img/modelisation_foule.png"
+               alt="Crowd evacuation simulation — the running app window" />
+        </div>
+        <div class="frame-cap">Real screenshot: the running social-force simulation</div>
+      </div>
+      <div class="txt-col">
+        <div class="p-idx">03 / SIMULATION</div>
+        <h2 class="p-title">Crowd Evacuation Simulator</h2>
+        <div class="p-meta">Top contributor · Python · CY Tech · 2025 <span class="p-grade">17/20</span></div>
+        <div class="p-body">
+          <p>An agent-based simulation of how a crowd evacuates a room, using a
+            social-force model with real-time animation.</p>
+          <ul>
+            <li>Vectorised pairwise repulsion forces and obstacle avoidance with NumPy.</li>
+            <li>Compared Euler vs. Runge-Kutta integration against the analytical solution to quantify numerical error.</li>
+          </ul>
+          <div class="p-stack">
+            <span class="chip">Python</span><span class="chip">NumPy</span><span class="chip">Tkinter</span><span class="chip">Numerical methods</span>
+          </div>
+          <button class="details-btn" type="button">Full details</button>
+          <div class="details-data" hidden>
+            <h4>Context</h4>
+            <p>A three-person team project modelling how a crowd evacuates a room. People are agents subject to <strong>repulsion forces</strong> from each other and from obstacles, animated in real time: a social-force model of pedestrian dynamics, with two scenarios (an open exit, and a pillar placed near the exit).</p>
+            <h4>My role</h4>
+            <p>Top contributor (<strong>13 of 25 commits</strong>), working across all three modules.</p>
+            <h4>Technical highlights</h4>
+            <ul>
+              <li><strong>Physics core (play.py):</strong> vectorised NumPy computation of pairwise distances and repulsion forces (person–person and person–pillar), using matrix symmetry to halve the distance computation.</li>
+              <li><strong>Animation (model.py):</strong> a Tkinter canvas where each person is an oval whose velocity is updated each frame from the computed forces, with wall/exit collision handling.</li>
+              <li><strong>Numerical study (Euler_Runge.py):</strong> integrated a drag ODE with <strong>Euler vs Runge-Kutta</strong> and compared both against the analytical solution to quantify integration error.</li>
+            </ul>
+            <h4>Outcomes</h4>
+            <p>Shipped and functional, with a real-time interactive animation of both scenarios.</p>
+            <p><strong>Stack:</strong> Python · NumPy · Tkinter · Matplotlib.</p>
+            <p><em>Source hosted on CY Tech's internal GitLab (not publicly accessible); available on request.</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section class="project" data-accent="#1f8a70" data-tint="#e6f2ee">
+    <div class="wrap">
+      <div class="frame-col">
+        <div class="frame has-img">
+          <span class="ph-tag">04 · Screenshot</span>
+          <img class="shot" src="assets/img/alb_main.png"
+               alt="Samedis Neige web app — Excel file-processing interface" />
+        </div>
+        <div class="frame-cap">Real screenshot: the file-processing UI I built</div>
+      </div>
+      <div class="txt-col">
+        <div class="p-idx">04 / FULL-STACK</div>
+        <h2 class="p-title">Samedis Neige — Association Web App</h2>
+        <div class="p-meta">Lead backend developer · PHP · 4-person team · CY Tech · 2025 <span class="p-grade">16/20</span></div>
+        <div class="p-body">
+          <p>A web app automating ski-trip logistics for a 1,213-member sports
+            association, turning three data files into attendance sheets and skill-level groups.</p>
+          <ul>
+            <li>Lead author of the CSV processing engine (top contributor, 35/109 commits).</li>
+            <li>Delivered the full lifecycle: needs analysis, design, build, demo.</li>
+          </ul>
+          <div class="p-stack">
+            <span class="chip">PHP</span><span class="chip">JavaScript</span><span class="chip">CSV/XLSX</span><span class="chip">Sessions</span>
+          </div>
+          <button class="details-btn" type="button">Full details</button>
+          <div class="details-data" hidden>
+            <h4>Context</h4>
+            <p>The <strong>Amicale Laïque de Billère</strong> (1,213 members) runs "Samedis Neige": Saturday ski day-trips for children, sorted into skill-level groups. The volunteer director prepared each trip by hand in Excel: exporting, renaming, sorting, filtering, cross-checking, marking attendance. We built a web app to automate all of it.</p>
+            <h4>My role: backend developer</h4>
+            <ul>
+              <li>Owned <strong>traitement.php</strong>, the CSV extraction-and-processing engine at the core of the app (17 commits on that file; 35/109 overall).</li>
+              <li>Parsed the input files, generated the attendance call-sheets, and bucketed people into level groups (débutant → flèche, snowboard, instructors), with error detection for name inconsistencies, duplicates and missing data.</li>
+            </ul>
+            <h4>Technical highlights</h4>
+            <ul>
+              <li>Vanilla <strong>PHP</strong>, no framework (the stack was school-mandated), with PHP-session auth and a date-archived history view.</li>
+              <li>Tolerates messy real-world source files (.xlsx/.xlsb/.xlsm/.csv).</li>
+            </ul>
+            <h4>Outcomes &amp; honesty</h4>
+            <p>Shipped, functional, and demonstrated against the spec. Not deployed to the association; deployment and maintenance were explicitly out of scope. Hardening note: it uses MD5 for the admin password, which I'd migrate to <code>password_hash()</code> (bcrypt/argon2).</p>
+            <p><em>Source hosted on CY Tech's internal GitLab (not publicly accessible); available on request.</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section class="project" data-accent="#8a4fbf" data-tint="#efe8f5">
+    <div class="wrap">
+      <div class="frame-col">
+        <div class="frame has-img">
+          <span class="ph-tag">05 · Overlay</span>
+          <img class="shot" src="assets/img/hiw-overlay.png"
+               alt="heIsWatching accountability overlay — a Byzantine archangel guardian" />
+        </div>
+        <div class="frame-cap">Real asset: the guardian overlay the extension renders</div>
+      </div>
+      <div class="txt-col">
+        <div class="p-idx">05 / PRODUCT</div>
+        <h2 class="p-title">heIsWatching — Browser Extension</h2>
+        <div class="p-meta">Solo developer / architect · TypeScript · personal project</div>
+        <div class="p-body">
+          <p>A cross-browser accountability extension that overlays distracting sites
+            you've blocklisted, built on the WXT framework (Manifest V3).</p>
+          <ul>
+            <li>Typed design-token theming system and a typed multi-theme engine.</li>
+            <li>Externalised JSON content and full English/French i18n.</li>
+          </ul>
+          <div class="p-stack">
+            <span class="chip">TypeScript</span><span class="chip">WXT</span><span class="chip">WebExtensions (MV3)</span><span class="chip">i18n</span>
+          </div>
+          <button class="details-btn" type="button">Full details</button>
+          <div class="details-data" hidden>
+            <h4>Context</h4>
+            <p>A personal accountability extension, a "guardian angel" for your browsing. When you visit a site on your blocklist, it overlays the page with an icon in an ancient, austere church style whose eyes follow the mouse, scripture verses, and music, nudging you away. It grew out of my interest in theology.</p>
+            <h4>My role: solo developer &amp; architect</h4>
+            <p>I designed the architecture, theming system, data model and roadmap. <strong>Built with AI (Claude Code) assistance: I architected and directed it</strong> rather than hand-writing every line.</p>
+            <h4>Technical highlights</h4>
+            <ul>
+              <li>TypeScript on <strong>WXT</strong>, Manifest V3, targeting Chrome, Firefox and Edge (~1,230 LOC).</li>
+              <li>A <strong>design-token system</strong> shared by the overlay and options pages, and a <strong>typed multi-theme engine</strong>: a template-literal <code>HexColor</code> type plus a dev-time guard validate each theme, so adding a theme is a single typed object.</li>
+              <li>Externalised content (32 verses per language in typed JSON) and full fr/en i18n; a content-script full-screen overlay with cross-device sync and CSS keyframe animations.</li>
+            </ul>
+            <h4>Roadmap</h4>
+            <p>A Bible-API verse set, anti-DevTools hardening, Safari/iOS support, per-site music, and local-only usage stats.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section class="project" data-accent="#d1483f" data-tint="#f8e8e5">
+    <div class="wrap">
+      <div class="frame-col">
+        <div class="frame has-img">
+          <span class="ph-tag">06 · Title screen</span>
+          <img class="shot" src="assets/img/robot-macdo.png"
+               alt="Robot MacDo — published game title screen" />
+        </div>
+        <div class="frame-cap">The published game's title screen (itch.io)</div>
+      </div>
+      <div class="txt-col">
+        <div class="p-idx">06 / ORIGINS</div>
+        <h2 class="p-title">Robot MacDo — Game</h2>
+        <div class="p-meta">Toulouse Pixel School · early project</div>
+        <div class="p-body">
+          <p>A published, playable game: starting from a base game, I customised
+            sprites, powers, boss behaviour and level design.</p>
+          <div class="p-stack">
+            <span class="chip">Game design</span><span class="chip">Sprites</span><span class="chip">Level design</span>
+          </div>
+          <div class="p-links"><a href="https://toulousepixelschool.itch.io/robot-macdo" target="_blank" rel="noopener">Play on itch.io</a></div>
+          <button class="details-btn" type="button">Full details</button>
+          <div class="details-data" hidden>
+            <h4>Context</h4>
+            <p>My origin story. At around <strong>10–11 years old</strong> I built a game, "Robot MacDo," through Toulouse Pixel School's teen game-development program (one semester). The program gave each student a working base game to customise. Alongside it I took private <strong>C#</strong> lessons from a University of Toulouse researcher.</p>
+            <h4>What I did</h4>
+            <p>Starting from the base game, I customised the <strong>sprites, powers, boss behaviour and level design</strong>.</p>
+            <h4>Outcome</h4>
+            <p>Published and playable, and the earliest project on this page: where I first started building software.</p>
+            <div class="dl-links"><a href="https://toulousepixelschool.itch.io/robot-macdo" target="_blank" rel="noopener">Play on itch.io ↗</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's build something.<br><a href="mailto:samuelbs364@gmail.com">Get in touch.</a></h2>
+    <div class="foot-links">
+      <a href="mailto:samuelbs364@gmail.com">samuelbs364@gmail.com</a>
+      <a href="https://github.com/samuelElElohim" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/samuel-emile-j%C3%A9r%C3%B4me-boucheron-seguin/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a href="resume.html">Resume</a>
+      <a href="assets/samuel-boucheron-seguin-resume.pdf" download>Resume (PDF) ↓</a>
+    </div>
+    <div class="foot-note">
+      <span>CS Engineering student · CY Tech Pau</span>
+      <span>© 2026 Samuel Boucheron Seguin</span>
+    </div>
+  </div>
+</footer>
+
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" data-close aria-label="Close">✕</button>
+    <div class="modal-eyebrow" id="modal-eyebrow"></div>
+    <h2 class="modal-title" id="modal-title"></h2>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+  // Fade the page tint + accent as each project reaches the middle of the viewport.
+  const root = document.documentElement;
+  const projects = document.querySelectorAll('.project');
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        root.style.setProperty('--tint', e.target.dataset.tint);
+        root.style.setProperty('--accent', e.target.dataset.accent);
+      }
+    });
+  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+  projects.forEach((p) => io.observe(p));
+
+  // reveal each project once as it scrolls into view
+  const reveal = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('in-view'); reveal.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px -16% 0px', threshold: 0.12 });
+  projects.forEach((p) => reveal.observe(p));
+
+  // details modal
+  const modal = document.getElementById('modal');
+  const mPanel = modal.querySelector('.modal-panel');
+  const mEyebrow = document.getElementById('modal-eyebrow');
+  const mTitle = document.getElementById('modal-title');
+  const mBody = document.getElementById('modal-body');
+  let lastFocus = null;
+
+  document.querySelectorAll('.details-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const proj = btn.closest('.project');
+      mEyebrow.textContent = proj.querySelector('.p-idx').textContent;
+      mTitle.textContent = proj.querySelector('.p-title').textContent.trim();
+      mBody.innerHTML = proj.querySelector('.details-data').innerHTML;
+      modal.style.setProperty('--accent', proj.dataset.accent);
+      lastFocus = btn;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      mPanel.scrollTop = 0;
+      modal.querySelector('.modal-close').focus();
+    });
+  });
+
+  function closeModal(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
+  modal.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', closeModal));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+
+  // ---------- custom cursor (pointer-fine devices only) ----------
+  if (matchMedia('(pointer:fine)').matches){
+    root.classList.add('has-cursor');
+    const dot = document.querySelector('.cursor-dot');
+    const ring = document.querySelector('.cursor-ring');
+    let mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my;
+    addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+      root.classList.add('ready');
+    });
+    (function ringLoop(){
+      rx += (mx - rx) * .18; ry += (my - ry) * .18;
+      ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+      requestAnimationFrame(ringLoop);
+    })();
+    const grow = () => ring.classList.add('hov');
+    const shrink = () => ring.classList.remove('hov');
+    document.querySelectorAll('a, button, .frame').forEach((el) => {
+      el.addEventListener('mouseenter', grow);
+      el.addEventListener('mouseleave', shrink);
+    });
+    document.addEventListener('mouseleave', () => root.classList.remove('ready'));
+    document.addEventListener('mouseenter', () => root.classList.add('ready'));
+  }
+
+  // ---------- cinematic parallax: the media of each panel drifts as it passes ----------
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion){
+    const frames = Array.from(document.querySelectorAll('.project .frame'));
+    const AMOUNT = 6; // vh of drift, kept within the frame's 9% overscan
+    let ticking = false;
+    function updateParallax(){
+      const cy = innerHeight / 2;
+      for (const f of frames){
+        const panel = f.closest('.project');
+        const r = panel.getBoundingClientRect();
+        let p = ((r.top + r.height / 2) - cy) / innerHeight;
+        p = Math.max(-1, Math.min(1, p));
+        f.style.transform = `translate3d(0, ${(-p * AMOUNT).toFixed(2)}vh, 0)`;
+      }
+      ticking = false;
+    }
+    addEventListener('scroll', () => {
+      if (!ticking){ requestAnimationFrame(updateParallax); ticking = true; }
+    }, { passive: true });
+    addEventListener('resize', updateParallax);
+    updateParallax();
+  }
+</script>
+
+</body>
+</html>

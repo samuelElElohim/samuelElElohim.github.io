@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Samuel Boucheron Seguin — Resume</title>
+<meta name="description" content="Resume of Samuel Boucheron Seguin — Computer Science Engineering student at CY Tech Pau, seeking a full-semester engineering internship, January to June 2027." />
+<style>
+  :root{
+    --ink:#17150f;
+    --ink-soft:#5f5949;
+    --rule:rgba(23,21,15,.16);
+    --accent:#6c4bd6;
+    --tint:#f3f1ea;
+    --mono:"SFMono-Regular",ui-monospace,"Cascadia Mono","Roboto Mono",Menlo,Consolas,monospace;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--tint); color:var(--ink);
+       font:16px/1.6 var(--sans); -webkit-font-smoothing:antialiased;
+       text-rendering:optimizeLegibility}
+  a{color:var(--accent); text-decoration:none; text-underline-offset:3px}
+  a:hover{text-decoration:underline}
+
+  /* ---------- top bar (screen only) ---------- */
+  .topbar{position:sticky; top:0; z-index:40; backdrop-filter:blur(8px);
+          background:rgba(14,12,8,.86); border-bottom:1px solid rgba(255,255,255,.1)}
+  .topbar .inner{display:flex; justify-content:space-between; align-items:center;
+                 gap:16px; padding:15px 40px; flex-wrap:wrap}
+  @media(max-width:640px){.topbar .inner{padding:14px 22px}}
+  .topbar .mark{font:600 .8rem/1 var(--mono); letter-spacing:.14em;
+                text-transform:uppercase; color:#fff}
+  .topbar .accent-dot{display:inline-block; width:9px; height:9px; border-radius:50%;
+                      background:var(--accent); margin-right:10px}
+  .topbar .acts{display:flex; align-items:center; gap:12px 22px; flex-wrap:wrap;
+                font:600 .8rem/1 var(--mono)}
+  .topbar .acts a.back{color:rgba(255,255,255,.72)}
+  .topbar .acts a.back:hover{color:#fff; text-decoration:none}
+  .btn{display:inline-flex; align-items:center; gap:9px; cursor:pointer;
+       font:600 .78rem/1 var(--mono); letter-spacing:.04em;
+       padding:12px 18px; border:1px solid var(--accent); background:transparent;
+       color:var(--accent); transition:background-color .2s ease, color .2s ease}
+  .btn:hover{background:var(--accent); color:#fff; text-decoration:none}
+  .btn.solid{background:var(--accent); color:#fff}
+  .btn.solid:hover{background:#5a3cbb; border-color:#5a3cbb}
+
+  /* ---------- the sheet ---------- */
+  .sheet{max-width:820px; margin:44px auto 80px; background:#fdfcf8;
+         border:1px solid var(--rule); box-shadow:0 30px 70px -40px rgba(10,8,4,.55);
+         padding:64px 72px 70px}
+  @media(max-width:720px){.sheet{margin:24px 16px 56px; padding:40px 26px 46px}}
+
+  .r-name{font:600 clamp(2.1rem,6vw,3.1rem)/1.02 var(--serif);
+          letter-spacing:-.02em; margin:0}
+  .r-role{margin:10px 0 0; font:500 clamp(1.02rem,2.4vw,1.22rem)/1.35 var(--serif);
+          color:var(--ink-soft)}
+  .r-contact{margin:20px 0 0; padding:0; list-style:none; display:flex;
+             flex-wrap:wrap; gap:6px 22px; font:600 .8rem/1.5 var(--mono);
+             color:var(--ink-soft); letter-spacing:.01em}
+  .r-contact a{color:var(--ink-soft)}
+  .r-contact a:hover{color:var(--accent)}
+
+  .r-target{margin-top:26px; border-left:3px solid var(--accent);
+            padding:12px 0 12px 18px; font-size:.98rem; color:#2b271e}
+  .r-target strong{font-weight:700; color:var(--ink)}
+
+  h2.r-sec{font:600 .74rem/1 var(--mono); letter-spacing:.18em; text-transform:uppercase;
+           color:var(--accent); margin:42px 0 0; padding-bottom:10px;
+           border-bottom:1px solid var(--rule)}
+  .r-sec + *{margin-top:20px}
+
+  .entry{margin:20px 0 0; break-inside:avoid}
+  .entry-head{display:flex; justify-content:space-between; align-items:baseline;
+              gap:8px 20px; flex-wrap:wrap}
+  .entry-title{font:600 1.06rem/1.35 var(--sans); margin:0}
+  .entry-title .sub{font-weight:400; color:var(--ink-soft)}
+  .entry-when{font:600 .76rem/1.5 var(--mono); color:var(--ink-soft);
+              letter-spacing:.03em; white-space:nowrap}
+  .entry-meta{margin:4px 0 0; font:600 .78rem/1.5 var(--mono); color:var(--ink-soft);
+              letter-spacing:.02em}
+  .grade{display:inline-block; font:700 .68rem/1 var(--mono); color:#fff;
+         background:var(--accent); padding:4px 7px; letter-spacing:.04em;
+         vertical-align:middle; margin-left:2px}
+  .entry ul{margin:10px 0 0; padding:0; list-style:none}
+  .entry li{position:relative; padding-left:20px; margin:7px 0; font-size:.98rem;
+            line-height:1.55}
+  .entry li::before{content:"—"; position:absolute; left:0; color:var(--accent)}
+  .entry p{margin:6px 0 0; font-size:.98rem}
+
+  .summary{font-size:1.02rem; line-height:1.65; margin:20px 0 0; max-width:70ch}
+
+  .skills{margin:20px 0 0; display:grid; gap:10px}
+  .skills div{font-size:.98rem}
+  .skills b{font:600 .74rem/1.6 var(--mono); letter-spacing:.1em;
+            text-transform:uppercase; color:var(--ink-soft); margin-right:10px}
+
+  .r-foot{margin-top:44px; padding-top:18px; border-top:1px solid var(--rule);
+          font:600 .72rem/1.6 var(--mono); color:var(--ink-soft);
+          letter-spacing:.03em; text-transform:uppercase;
+          display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+
+  /* ---------- print / PDF ---------- */
+  @page{size:A4; margin:11mm 13mm}
+  @media print{
+    :root{--accent:#4a34a0}
+    body{background:#fff; font-size:9.6pt; line-height:1.34}
+    .topbar,.no-print{display:none !important}
+    .sheet{max-width:none; margin:0; padding:0; border:0; box-shadow:none;
+           background:#fff}
+    .r-name{font-size:20.5pt}
+    .r-role{font-size:10pt; margin-top:3px}
+    .r-contact{margin-top:8px; font-size:7.7pt; gap:2px 13px; line-height:1.4}
+    .r-target{margin-top:9px; padding:5px 0 5px 10px; font-size:8.7pt; line-height:1.35}
+    .summary{margin-top:8px; font-size:9pt; line-height:1.38; max-width:none}
+    h2.r-sec{margin-top:11px; padding-bottom:4px; font-size:7.5pt; letter-spacing:.15em}
+    .r-sec + *{margin-top:7px}
+    .entry{margin-top:6.5px; break-inside:avoid}
+    .entry-title{font-size:9.7pt; line-height:1.25}
+    .entry-meta{margin-top:1px}
+    .entry-meta,.entry-when{font-size:7.7pt}
+    .entry ul{margin-top:4px}
+    .entry li{margin:2px 0; font-size:9pt; line-height:1.33; padding-left:13px}
+    .entry p{margin-top:3px; font-size:9pt; line-height:1.33}
+    .grade{font-size:7pt; padding:1.5px 4px;
+           -webkit-print-color-adjust:exact; print-color-adjust:exact}
+    .skills{margin-top:7px; gap:3px}
+    .skills div{font-size:9pt; line-height:1.35}
+    .skills b{font-size:7.3pt; margin-right:8px}
+    .r-foot{margin-top:9px; padding-top:5px; font-size:7pt}
+    a{color:inherit; text-decoration:none}
+    .r-contact a{color:inherit}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar no-print">
+  <div class="inner">
+    <a class="mark" href="index.html" style="color:#fff"><span class="accent-dot"></span>S. Boucheron Seguin</a>
+    <div class="acts">
+      <a class="back" href="index.html">← Work</a>
+      <a class="btn solid" href="assets/samuel-boucheron-seguin-resume.pdf" download>Download PDF ↓</a>
+      <button class="btn" type="button" id="print-btn">Print</button>
+    </div>
+  </div>
+</div>
+
+<main class="sheet">
+
+  <h1 class="r-name">Samuel Boucheron Seguin</h1>
+  <p class="r-role">Computer Science Engineering Student · CY Tech Pau</p>
+  <ul class="r-contact">
+    <li>Pau, France</li>
+    <li><a href="mailto:samuelbs364@gmail.com">samuelbs364@gmail.com</a></li>
+    <li><a href="https://github.com/samuelElElohim" target="_blank" rel="noopener">github.com/samuelElElohim</a></li>
+    <li><a href="https://www.linkedin.com/in/samuel-emile-j%C3%A9r%C3%B4me-boucheron-seguin/" target="_blank" rel="noopener">linkedin.com/in/samuel-boucheron-seguin</a></li>
+  </ul>
+
+  <p class="r-target"><strong>Seeking:</strong> a full-semester engineering internship in
+    software or data, <strong>mid-January to June 2027</strong> (~5–6 months). Location open
+    across Europe; standing interest in Scandinavia.</p>
+
+  <h2 class="r-sec">Summary</h2>
+  <p class="summary">Second-year Computer Science Engineering student at CY Tech with hands-on
+    experience turning applied mathematics into working software — facial recognition
+    (PCA/eigenfaces), crowd-evacuation simulation, and full-stack web apps. Served as
+    technical lead on a 5-person Java project.</p>
+
+  <h2 class="r-sec">Education</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <p class="entry-title">CY Tech — Engineering Degree (Ingénieur), Computer Science <span class="sub">· Pau, France</span></p>
+      <span class="entry-when">2025–2028</span>
+    </div>
+    <p class="entry-meta">2nd year (ING2) · MSc in Computer Science Engineering expected 2028</p>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <p class="entry-title">Classes Préparatoires <span class="sub">— 2-year scientific program · Pau, France</span></p>
+      <span class="entry-when">2023–2025</span>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <p class="entry-title">French Baccalauréat <span class="sub">— Maths &amp; Computer Science (NSI), Expert Maths option</span></p>
+      <span class="entry-when">2023</span>
+    </div>
+    <p class="entry-meta">Graduated with Highest Honors (Mention Très Bien)</p>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <p class="entry-title">CS50AI: Introduction to AI with Python <span class="sub">— HarvardX (edX)</span></p>
+      <span class="entry-when">2025–26</span>
+    </div>
+    <p class="entry-meta">~100 hours · <a href="https://cs50.harvard.edu/certificates/9967840f-4cef-4c00-acfb-d5e71ad7abed">CS50 Certificate</a> — all twelve projects, from search and logic to CNNs and NLP</p>
+  </div>
+
+  <h2 class="r-sec">Selected Projects</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <p class="entry-title">Facial Recognition with PCA / Eigenfaces <span class="sub">— Technical Lead, Java/JavaFX</span></p>
+      <span class="entry-when">2025–26 <span class="grade">16.41/20</span></span>
+    </div>
+    <ul>
+      <li>Led architecture, code conventions, and Git/branch strategy for a 5-person team;
+        owned integration across all modules.</li>
+      <li>Implemented the projection and identification algorithms, including a
+        three-criterion recognise/reject decision (Hotelling's T², reconstruction error,
+        nearest-distance) calibrated empirically on a validation set.</li>
+      <li>Cut computation on 40,000-dimension images by computing eigenfaces from the
+        reduced covariance matrix (AᵀA), and evaluated accuracy with confusion matrices.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <p class="entry-title">Crowd Evacuation Simulator <span class="sub">— Top Contributor, Python</span></p>
+      <span class="entry-when">2025 <span class="grade">17/20</span></span>
+    </div>
+    <ul>
+      <li>Built a social-force agent model (NumPy) computing pairwise repulsion forces and
+        obstacle avoidance, animated in real time with Tkinter.</li>
+      <li>Implemented and compared Euler vs. Runge-Kutta integration against the analytical
+        solution to quantify numerical error.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <p class="entry-title">Samedis Neige <span class="sub">— Web App for a Sports Association, PHP</span></p>
+      <span class="entry-when">2025 <span class="grade">16/20</span></span>
+    </div>
+    <ul>
+      <li>Lead author of the CSV processing engine (top contributor, 35/109 commits) that
+        generated attendance sheets and ski-level groups from association data files.</li>
+      <li>Delivered a session-secured web app (upload, processing, dated history) for the
+        1,213-member Amicale Laïque de Billère; full lifecycle from needs analysis to demo.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <p class="entry-title">heIsWatching <span class="sub">— Browser Extension, TypeScript</span></p>
+      <span class="entry-when">personal</span>
+    </div>
+    <ul>
+      <li>Built a cross-browser (Chrome/Firefox/Edge, Manifest V3) accountability extension
+        on WXT, with a typed design-token theming system, externalized JSON content, and
+        English/French i18n.</li>
+    </ul>
+  </div>
+
+  <h2 class="r-sec">Experience</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <p class="entry-title">Private Tutor <span class="sub">— Toulouse &amp; Pau</span></p>
+      <span class="entry-when">2023–2024</span>
+    </div>
+    <p>Tutored middle- and high-school students; built communication and client trust.</p>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <p class="entry-title">Facilities Maintenance Assistant <span class="sub">— Cugnaux</span></p>
+      <span class="entry-when">2023</span>
+    </div>
+    <p>Maintained municipal facilities to hygiene/safety standards; developed autonomy.</p>
+  </div>
+
+  <h2 class="r-sec">Skills</h2>
+  <div class="skills">
+    <div><b>Languages</b>Java, Python, PHP, TypeScript/JavaScript, C#, C</div>
+    <div><b>Concepts</b>PCA/linear algebra, computer vision, numerical methods, data processing, web &amp; frontend architecture, Git</div>
+    <div><b>Tools</b>JavaFX, NumPy, WXT/WebExtensions, Kali Linux, UML</div>
+    <div><b>Spoken</b>French (native), English (fluent), German (school level), Norwegian (~A1, learning)</div>
+  </div>
+
+  <div class="r-foot">
+    <span>Samuel Boucheron Seguin · Resume</span>
+    <span>Updated September 2026</span>
+  </div>
+
+</main>
+
+<script>
+  document.getElementById('print-btn').addEventListener('click', () => window.print());
+</script>
+
+</body>
+</html>
