@@ -242,6 +242,19 @@
     background:var(--accent); margin-left:8px}
   @keyframes introName{to{opacity:1; transform:none}}
   @keyframes introUp{to{transform:translateY(-100%); visibility:hidden}}
+
+  /* --- "Also" band: lighter-weight entries that don't warrant a full section --- */
+  .also{border-top:2px solid var(--ink); padding:70px 0 10px}
+  .also .kicker{animation:none; opacity:1; transform:none}
+  .also-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:38px 48px; margin-top:8px}
+  .also-item h3{font:500 1.45rem/1.15 var(--serif); letter-spacing:-.01em; margin:0 0 4px}
+  .also-meta{font:600 .74rem/1.5 var(--mono); letter-spacing:.06em; text-transform:uppercase;
+    color:var(--ink-soft); margin-bottom:12px}
+  .also-item p{margin:0; color:#2b271e; font-size:.98rem; line-height:1.65; max-width:46ch}
+  .also-item .p-links{margin-top:14px}
+  .also-item .p-links a{color:var(--ink); border-bottom:1px solid var(--rule)}
+  .also-item .p-links a:hover{border-bottom-color:var(--accent); color:var(--accent)}
+  @media(max-width:640px){.also{padding:48px 0 4px} .also-grid{gap:32px}}
 </style>
 </head>
 <body>
@@ -566,6 +579,28 @@
   </section>
 
 </main>
+
+<section class="also">
+  <div class="wrap">
+    <div class="kicker">Also</div>
+    <div class="also-grid">
+
+      <div class="also-item">
+        <h3>PYR-CTF 2025</h3>
+        <div class="also-meta">Capture The Flag · CY Tech Pau · Nov 2025</div>
+        <p>My first CTF: 33 challenges across 10 categories — crypto, pwn, reverse,
+          forensics, OSINT, web — over 8h30, sponsored by Orange Cyberdéfense.
+          Classes took the day, so my two-person team joined remotely for the last
+          stretch and played to the close. We solved two, including a cipher stacked
+          three deep: hex, then Base64, then Vigenère, with the key recovered from
+          a known plaintext tail. I went in with no security background and left
+          with a much sharper idea of what the field actually asks of you.</p>
+        <div class="p-links"><a href="https://github.com/pyr-ctf/PYRCTF-2025" target="_blank" rel="noopener">Challenge archive</a></div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <footer id="contact">
   <div class="wrap">
