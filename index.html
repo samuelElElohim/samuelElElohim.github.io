@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Samuel Boucheron Seguin — Work</title>
-<meta name="description" content="A gallery of software Samuel Boucheron Seguin has built — facial recognition, crowd simulation, full-stack web and browser tooling." />
+<meta name="description" content="A gallery of software Samuel Boucheron Seguin has built: facial recognition, crowd simulation, full-stack web and browser tooling." />
 <style>
   :root{
     --ink:#17150f;
@@ -276,8 +276,8 @@
     <div class="kicker">CS Engineering Student · CY Tech Pau</div>
     <h1 class="name"><span class="ln"><span>Samuel</span></span><span class="ln"><span>Boucheron Seguin</span></span></h1>
     <p class="role">A library of things I've built.</p>
-    <p class="lede">Facial recognition, crowd simulation, full-stack web, browser tooling:
-      applied maths turned into working software.</p>
+    <p class="lede">An internship platform, facial recognition, crowd simulation, browser
+      tooling: applied maths and full-stack web turned into working software.</p>
     <div class="scroll-hint">Scroll through the work</div>
   </div>
 </header>
@@ -285,18 +285,73 @@
 <main id="work">
 
   <!-- 01 -->
+  <section class="project" data-accent="#2b5f9e" data-tint="#e8eef7">
+    <div class="wrap">
+      <div class="frame-col">
+        <div class="frame has-img">
+          <span class="ph-tag">01 · Screenshot</span>
+          <img class="shot" src="assets/img/cyedin-offres.png"
+               alt="CYEDIN student space: the internship offer feed, with search, filière, sector, tag and duration filters above a grid of offer cards" />
+        </div>
+        <div class="frame-cap">Real screenshot: the student offer feed, filtered by filière, sector and tag</div>
+      </div>
+      <div class="txt-col">
+        <div class="p-idx">01 / PLATFORM</div>
+        <h2 class="p-title">CYEDIN — Internship Platform</h2>
+        <div class="p-meta">Backend &amp; auth · Laravel + React · 3-person team · CY Tech · 2026 <span class="p-grade">15.5/20</span></div>
+        <div class="p-body">
+          <p>A multi-role platform centralising internship search and management for
+            students, companies and academic staff at once. The fragmentation it fixes
+            is the problem I'm living from the student side.</p>
+          <ul>
+            <li>Owned the backend and the authentication flow across five user roles.</li>
+            <li>Each role gets its own space and permissions, and it went to production.</li>
+          </ul>
+          <div class="p-stack">
+            <span class="chip">Laravel 12</span><span class="chip">React 19</span><span class="chip">Inertia.js</span><span class="chip">PostgreSQL</span>
+          </div>
+          <div class="p-links"><a href="https://github.com/samuelElElohim/projet-cyedin" target="_blank" rel="noopener">Source on GitHub</a></div>
+          <button class="details-btn" type="button">Full details</button>
+          <div class="details-data" hidden>
+            <h4>Context</h4>
+            <p>Internship hunting is fragmented: students, companies and academic staff all track the same process across disconnected platforms, and job boards are saturated: hundreds of replies to a posting within hours. We built one system to hold the actions, the information and the administration for all three. Team of three, second-semester server-side web project.</p>
+            <h4>My role: backend &amp; auth</h4>
+            <ul>
+              <li>Business logic, routing, controllers and server architecture across the five role spaces.</li>
+              <li><strong>One login form for all five roles.</strong> The platform detects the role and redirects to the right dashboard, so nobody needs to know which URL matches their profile and all verification logic sits in one place.</li>
+              <li><strong>Forced password change on first login.</strong> Admins create accounts with a temporary password and a middleware blocks access until the user sets their own, so the administrator never knows the final password.</li>
+              <li>Traceability of admin actions, and an event-driven notification system that targets students by <em>filière</em>.</li>
+            </ul>
+            <h4>Technical highlights</h4>
+            <ul>
+              <li><strong>No REST API, deliberately.</strong> Inertia.js bridges Laravel and React directly: one session, server-side validation passed into components, CSRF handled for free, and no second auth layer to maintain.</li>
+              <li>Five roles behind route middleware (admin, student, company, tutor, jury), each with its own space and dashboard.</li>
+              <li>A relational schema of around twenty entities: users and their role subclasses, offers, applications, internships, documents and notifications. Admins create users in bulk by importing CSV or XLSX spreadsheets.</li>
+              <li>Documents hang off a folder abstraction rather than directly off the user, so files organise by internship and application instead of forming a flat list.</li>
+            </ul>
+            <h4>Outcomes &amp; honesty</h4>
+            <p>A functional MVP delivered on time and <strong>deployed to production on Railway</strong>, though the instance is no longer running, so the link is dead and only the source is live.</p>
+            <p>What I'd do differently: we divided the work by MVC layer (one of us on models, one on controllers, one on views) and kept that structure even after the work stopped fitting it. Splitting by feature instead, each of us owning a whole slice like the application flow or the company space, would have balanced the load better and kept us out of each other's files. How you divide the work turned out to matter as much as how you write it.</p>
+            <p><em>Built with AI assistance, on frameworks that were new to me. It was most useful for getting fluent quickly and for debugging; the architecture and the decisions above are mine to explain.</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 -->
   <section class="project" data-accent="#6c4bd6" data-tint="#eee9f7">
     <div class="wrap">
       <div class="frame-col">
         <div class="frame has-img">
-          <span class="ph-tag">01 · Eigenfaces</span>
+          <span class="ph-tag">02 · Eigenfaces</span>
           <img class="shot" src="assets/img/fr-eigenfaces-grid.png"
                alt="Grid of eigenfaces computed from the reduced covariance matrix" />
         </div>
         <div class="frame-cap">Real output: the eigenfaces computed by the PCA (output/eigenfaces)</div>
       </div>
       <div class="txt-col">
-        <div class="p-idx">01 / EIGENFACES</div>
+        <div class="p-idx">02 / EIGENFACES</div>
         <h2 class="p-title">Facial Recognition with PCA</h2>
         <div class="p-meta">Technical Lead &amp; Lead Java Dev · 5-person team · CY Tech · 2025–26 <span class="p-grade">16.41/20</span></div>
         <div class="p-body">
@@ -339,13 +394,13 @@
     </div>
   </section>
 
-  <!-- 02 -->
+  <!-- 03 -->
   <section class="project" data-accent="#3f7d4f" data-tint="#e8f0e8">
     <div class="wrap">
       <div class="frame-col">
         <div class="frame code">
-          <span class="ph-tag">02 · Python</span>
-<pre><span class="c"># adversarial search — pick the optimal move</span>
+          <span class="ph-tag">03 · Python</span>
+<pre><span class="c"># adversarial search: pick the optimal move</span>
 <span class="k">def</span> <span class="f">minimax</span>(board):
     <span class="k">if</span> terminal(board):
         <span class="k">return</span> <span class="k">None</span>
@@ -367,11 +422,11 @@
         <div class="frame-cap">Illustrative excerpt: minimax, from the adversarial-search work</div>
       </div>
       <div class="txt-col">
-        <div class="p-idx">02 / STUDY</div>
+        <div class="p-idx">03 / STUDY</div>
         <h2 class="p-title">CS50AI — AI with Python</h2>
         <div class="p-meta">HarvardX (edX) · ~100h · <a class="p-cert" href="assets/cs50ai-certificate.pdf" target="_blank" rel="noopener">CS50 Certificate ↗</a></div>
         <div class="p-body">
-          <p>All <strong>twelve projects</strong> implemented in Python — from breadth-first
+          <p>All <strong>twelve projects</strong> implemented in Python, from breadth-first
             search and minimax through Bayesian networks and constraint satisfaction to
             Q-learning, a CNN and BERT attention.</p>
           <div class="p-stack">
@@ -380,19 +435,19 @@
           <button class="details-btn" type="button">Full details</button>
           <div class="details-data" hidden>
             <h4>Context</h4>
-            <p>HarvardX's <strong>CS50AI</strong> (~100 hours), taken solo alongside my engineering degree. I completed <strong>all twelve projects</strong> — the certificate is <a href="assets/cs50ai-certificate.pdf" target="_blank" rel="noopener">here</a> and can be <a href="https://cs50.harvard.edu/certificates/9967840f-4cef-4c00-acfb-d5e71ad7abed" target="_blank" rel="noopener">verified with Harvard ↗</a>.</p>
+            <p>HarvardX's <strong>CS50AI</strong> (~100 hours), taken solo alongside my engineering degree. I completed <strong>all twelve projects</strong>, and the certificate is <a href="assets/cs50ai-certificate.pdf" target="_blank" rel="noopener">here</a> and can be <a href="https://cs50.harvard.edu/certificates/9967840f-4cef-4c00-acfb-d5e71ad7abed" target="_blank" rel="noopener">verified with Harvard ↗</a>.</p>
             <h4>The twelve projects</h4>
             <ul>
-              <li><strong>Search</strong> — <em>Degrees</em>: breadth-first search over an actor/movie graph. <em>Tic-Tac-Toe</em>: an unbeatable <strong>minimax</strong> opponent (the excerpt shown).</li>
-              <li><strong>Knowledge</strong> — <em>Knights</em>: logic puzzles encoded as propositional sentences and solved by model checking. <em>Minesweeper</em>: an agent that keeps a knowledge base of sentences over cell sets and infers which squares are safe.</li>
-              <li><strong>Uncertainty</strong> — <em>PageRank</em>: Google's algorithm, implemented both by sampling a Markov chain and by iterating to convergence. <em>Heredity</em>: a Bayesian network inferring gene and trait probabilities across a family tree.</li>
-              <li><strong>Optimization</strong> — <em>Crossword</em>: constraint satisfaction with node/arc consistency (<strong>AC-3</strong>) and backtracking guided by minimum-remaining-values and least-constraining-value heuristics.</li>
-              <li><strong>Learning</strong> — <em>Shopping</em>: a k-nearest-neighbour classifier on real e-commerce sessions, scored on <strong>sensitivity and specificity</strong> because the classes are badly imbalanced. <em>Nim</em>: <strong>Q-learning</strong> — the agent is given no strategy and learns by playing itself.</li>
-              <li><strong>Neural networks</strong> — <em>Traffic</em>: a <strong>convolutional neural network</strong> in TensorFlow/Keras classifying German road signs across 43 categories, with the layer depth, pooling and dropout tuned experimentally.</li>
-              <li><strong>Language</strong> — <em>Parser</em>: a context-free grammar in NLTK parsing English sentences and extracting noun phrases. <em>Attention</em>: masked-word prediction with <strong>BERT</strong>, plus visualising the attention heads to see what each one actually looks at.</li>
+              <li><strong>Search.</strong> <em>Degrees</em>: breadth-first search over an actor/movie graph. <em>Tic-Tac-Toe</em>: an unbeatable <strong>minimax</strong> opponent (the excerpt shown).</li>
+              <li><strong>Knowledge.</strong> <em>Knights</em>: logic puzzles encoded as propositional sentences and solved by model checking. <em>Minesweeper</em>: an agent that keeps a knowledge base of sentences over cell sets and infers which squares are safe.</li>
+              <li><strong>Uncertainty.</strong> <em>PageRank</em>: Google's algorithm, implemented both by sampling a Markov chain and by iterating to convergence. <em>Heredity</em>: a Bayesian network inferring gene and trait probabilities across a family tree.</li>
+              <li><strong>Optimization.</strong> <em>Crossword</em>: constraint satisfaction with node/arc consistency (<strong>AC-3</strong>) and backtracking guided by minimum-remaining-values and least-constraining-value heuristics.</li>
+              <li><strong>Learning.</strong> <em>Shopping</em>: a k-nearest-neighbour classifier on real e-commerce sessions, scored on <strong>sensitivity and specificity</strong> because the classes are badly imbalanced. <em>Nim</em>: <strong>Q-learning</strong>, where the agent is given no strategy and learns by playing itself.</li>
+              <li><strong>Neural networks.</strong> <em>Traffic</em>: a <strong>convolutional neural network</strong> in TensorFlow/Keras classifying German road signs across 43 categories, with the layer depth, pooling and dropout tuned experimentally.</li>
+              <li><strong>Language.</strong> <em>Parser</em>: a context-free grammar in NLTK parsing English sentences and extracting noun phrases. <em>Attention</em>: masked-word prediction with <strong>BERT</strong>, plus visualising the attention heads to see what each one actually looks at.</li>
             </ul>
             <h4>Why it matters to me</h4>
-            <p>The value was the breadth in one continuous line: classical search and logic, then probabilistic reasoning, then classical ML, then deep learning and NLP — each one written from scratch rather than watched.</p>
+            <p>The value was the breadth in one continuous line: classical search and logic, then probabilistic reasoning, then classical ML, then deep learning and NLP, each one written from scratch rather than watched.</p>
             <p><strong>Stack:</strong> Python · NumPy · scikit-learn · TensorFlow/Keras · NLTK.</p>
             <p class="note">The solutions are not published: CS50's academic-honesty policy asks students not to share their work.</p>
           </div>
@@ -401,19 +456,19 @@
     </div>
   </section>
 
-  <!-- 03 -->
+  <!-- 04 -->
   <section class="project" data-accent="#c8761c" data-tint="#f8efe1">
     <div class="wrap">
       <div class="frame-col">
         <div class="frame has-img">
-          <span class="ph-tag">03 · Simulation</span>
+          <span class="ph-tag">04 · Simulation</span>
           <img class="shot contain" src="assets/img/modelisation_foule.png"
                alt="Crowd evacuation simulation — the running app window" />
         </div>
         <div class="frame-cap">Real screenshot: the running social-force simulation</div>
       </div>
       <div class="txt-col">
-        <div class="p-idx">03 / SIMULATION</div>
+        <div class="p-idx">04 / SIMULATION</div>
         <h2 class="p-title">Crowd Evacuation Simulator</h2>
         <div class="p-meta">Top contributor · Python · CY Tech · 2025 <span class="p-grade">17/20</span></div>
         <div class="p-body">
@@ -431,7 +486,7 @@
             <h4>Context</h4>
             <p>A three-person team project modelling how a crowd evacuates a room. People are agents subject to <strong>repulsion forces</strong> from each other and from obstacles, animated in real time: a social-force model of pedestrian dynamics, with two scenarios (an open exit, and a pillar placed near the exit).</p>
             <h4>My role</h4>
-            <p>Top contributor (<strong>13 of 25 commits</strong>), working across all three modules.</p>
+            <p>Top contributor, working across all three modules.</p>
             <h4>Technical highlights</h4>
             <ul>
               <li><strong>Physics core (play.py):</strong> vectorised NumPy computation of pairwise distances and repulsion forces (person–person and person–pillar), using matrix symmetry to halve the distance computation.</li>
@@ -448,26 +503,26 @@
     </div>
   </section>
 
-  <!-- 04 -->
+  <!-- 05 -->
   <section class="project" data-accent="#1f8a70" data-tint="#e6f2ee">
     <div class="wrap">
       <div class="frame-col">
         <div class="frame has-img">
-          <span class="ph-tag">04 · Screenshot</span>
+          <span class="ph-tag">05 · Screenshot</span>
           <img class="shot" src="assets/img/alb_main.png"
                alt="Samedis Neige web app — Excel file-processing interface" />
         </div>
         <div class="frame-cap">Real screenshot: the file-processing UI I built</div>
       </div>
       <div class="txt-col">
-        <div class="p-idx">04 / FULL-STACK</div>
+        <div class="p-idx">05 / FULL-STACK</div>
         <h2 class="p-title">Samedis Neige — Association Web App</h2>
         <div class="p-meta">Lead backend developer · PHP · 4-person team · CY Tech · 2025 <span class="p-grade">16/20</span></div>
         <div class="p-body">
           <p>A web app automating ski-trip logistics for a 1,213-member sports
             association, turning three data files into attendance sheets and skill-level groups.</p>
           <ul>
-            <li>Lead author of the CSV processing engine (top contributor, 35/109 commits).</li>
+            <li>Lead author of the CSV processing engine, and top contributor on the team.</li>
             <li>Delivered the full lifecycle: needs analysis, design, build, demo.</li>
           </ul>
           <div class="p-stack">
@@ -479,7 +534,7 @@
             <p>The <strong>Amicale Laïque de Billère</strong> (1,213 members) runs "Samedis Neige": Saturday ski day-trips for children, sorted into skill-level groups. The volunteer director prepared each trip by hand in Excel: exporting, renaming, sorting, filtering, cross-checking, marking attendance. We built a web app to automate all of it.</p>
             <h4>My role: backend developer</h4>
             <ul>
-              <li>Owned <strong>traitement.php</strong>, the CSV extraction-and-processing engine at the core of the app (17 commits on that file; 35/109 overall).</li>
+              <li>Owned <strong>traitement.php</strong>, the CSV extraction-and-processing engine at the core of the app.</li>
               <li>Parsed the input files, generated the attendance call-sheets, and bucketed people into level groups (débutant → flèche, snowboard, instructors), with error detection for name inconsistencies, duplicates and missing data.</li>
             </ul>
             <h4>Technical highlights</h4>
@@ -496,19 +551,19 @@
     </div>
   </section>
 
-  <!-- 05 -->
+  <!-- 06 -->
   <section class="project" data-accent="#8a4fbf" data-tint="#efe8f5">
     <div class="wrap">
       <div class="frame-col">
         <div class="frame has-img">
-          <span class="ph-tag">05 · Overlay</span>
+          <span class="ph-tag">06 · Overlay</span>
           <img class="shot" src="assets/img/hiw-overlay.png"
                alt="heIsWatching accountability overlay — a Byzantine archangel guardian" />
         </div>
         <div class="frame-cap">Real asset: the guardian overlay the extension renders</div>
       </div>
       <div class="txt-col">
-        <div class="p-idx">05 / PRODUCT</div>
+        <div class="p-idx">06 / PRODUCT</div>
         <h2 class="p-title">heIsWatching — Browser Extension</h2>
         <div class="p-meta">Solo developer / architect · TypeScript · personal project</div>
         <div class="p-body">
@@ -529,7 +584,7 @@
             <p>I designed the architecture, theming system, data model and roadmap. <strong>Built with AI (Claude Code) assistance: I architected and directed it</strong> rather than hand-writing every line.</p>
             <h4>Technical highlights</h4>
             <ul>
-              <li>TypeScript on <strong>WXT</strong>, Manifest V3, targeting Chrome, Firefox and Edge (~1,230 LOC).</li>
+              <li>TypeScript on <strong>WXT</strong>, Manifest V3, targeting Chrome, Firefox and Edge.</li>
               <li>A <strong>design-token system</strong> shared by the overlay and options pages, and a <strong>typed multi-theme engine</strong>: a template-literal <code>HexColor</code> type plus a dev-time guard validate each theme, so adding a theme is a single typed object.</li>
               <li>Externalised content (32 verses per language in typed JSON) and full fr/en i18n; a content-script full-screen overlay with cross-device sync and CSS keyframe animations.</li>
             </ul>
@@ -541,19 +596,19 @@
     </div>
   </section>
 
-  <!-- 06 -->
+  <!-- 07 -->
   <section class="project" data-accent="#d1483f" data-tint="#f8e8e5">
     <div class="wrap">
       <div class="frame-col">
         <div class="frame has-img">
-          <span class="ph-tag">06 · Title screen</span>
+          <span class="ph-tag">07 · Title screen</span>
           <img class="shot" src="assets/img/robot-macdo.png"
                alt="Robot MacDo — published game title screen" />
         </div>
         <div class="frame-cap">The published game's title screen (itch.io)</div>
       </div>
       <div class="txt-col">
-        <div class="p-idx">06 / ORIGINS</div>
+        <div class="p-idx">07 / ORIGINS</div>
         <h2 class="p-title">Robot MacDo — Game</h2>
         <div class="p-meta">Toulouse Pixel School · early project</div>
         <div class="p-body">
