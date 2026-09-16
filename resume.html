@@ -4,7 +4,19 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Samuel Boucheron Seguin — Resume</title>
-<meta name="description" content="Resume of Samuel Boucheron Seguin — Computer Science Engineering student at CY Tech Pau, seeking a full-semester engineering internship, January to June 2027." />
+<meta name="description" content="Resume of Samuel Boucheron Seguin — Computer Science Engineering student at CY Tech Pau, seeking a full-semester engineering internship, March to August 2027." />
+<link rel="canonical" href="https://samuelelelohim.github.io/resume.html" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317150f'/%3E%3Ccircle cx='32' cy='32' r='13' fill='%237a5cff'/%3E%3C/svg%3E" />
+<meta property="og:type" content="profile" />
+<meta property="og:site_name" content="Samuel Boucheron Seguin" />
+<meta property="og:title" content="Samuel Boucheron Seguin: resume" />
+<meta property="og:description" content="CS engineering student at CY Tech, seeking a 5–6 month software or data internship, mid-March to August 2027. One-page PDF available." />
+<meta property="og:url" content="https://samuelelelohim.github.io/resume.html" />
+<meta property="og:image" content="https://samuelelelohim.github.io/assets/img/og-card.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Samuel Boucheron Seguin, CS engineering student, seeking an internship from March to August 2027" />
+<meta name="twitter:card" content="summary_large_image" />
 <style>
   :root{
     --ink:#17150f;
@@ -100,9 +112,11 @@
           letter-spacing:.03em; text-transform:uppercase;
           display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
 
-  /* ---------- print / PDF ---------- */
+</style>
+<!-- print / PDF: kept in its own sheet so the fit-to-page script can measure it -->
+<style id="print-css" media="print">
   @page{size:A4; margin:10mm 13mm}
-  @media print{
+
     :root{--accent:#4a34a0}
     body{background:#fff; font-size:9.6pt; line-height:1.34}
     .topbar,.no-print{display:none !important}
@@ -130,7 +144,6 @@
     .r-foot{margin-top:7px; padding-top:4px; font-size:7pt}
     a{color:inherit; text-decoration:none}
     .r-contact a{color:inherit}
-  }
 </style>
 </head>
 <body>
@@ -159,7 +172,7 @@
   </ul>
 
   <p class="r-target"><strong>Seeking:</strong> a full-semester engineering internship in
-    software or data, <strong>mid-January to June 2027</strong> (~5–6 months). Location open
+    software or data, <strong>mid-March to August 2027</strong> (~5–6 months). Location open
     across Europe; standing interest in Scandinavia.</p>
 
   <h2 class="r-sec">Summary</h2>
@@ -293,6 +306,26 @@
 
 <script>
   document.getElementById('print-btn').addEventListener('click', () => window.print());
+
+  // Keep the printout on one A4 page whatever fonts the visitor's machine has:
+  // lay the sheet out with the print styles at the printable width, and zoom it
+  // down if it runs taller than the page. (The PDF is built the same way.)
+  const printCss = document.getElementById('print-css');
+  const sheet = document.querySelector('.sheet');
+  const MM = 96 / 25.4;
+  function fitToPage(){
+    sheet.style.zoom = '';
+    printCss.media = 'all';
+    sheet.style.width = (210 - 26) * MM + 'px';
+    const h = sheet.getBoundingClientRect().height;
+    sheet.style.width = '';
+    printCss.media = 'print';
+    const avail = (297 - 20) * MM - 6; // page height minus @page margins, small safety
+    if (h > avail) sheet.style.zoom = (avail / h).toFixed(4);
+  }
+  addEventListener('beforeprint', fitToPage);
+  addEventListener('afterprint', () => { sheet.style.zoom = ''; });
+  matchMedia('print').addEventListener('change', (e) => { if (e.matches) fitToPage(); });
 </script>
 
 </body>
