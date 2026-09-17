@@ -17,13 +17,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
-<meta name="description" content="Computer science engineering student at CY Tech, seeking a 5–6 month software or data internship from mid-March to August 2027. Projects, resume and contact." />
+<meta name="description" content="Computer science engineering student at CY Tech, seeking a 5–6 month internship in any area of IT, ideally cybersecurity, from mid-March to August 2027. Projects, resume and contact." />
 <link rel="canonical" href="https://samuelelelohim.github.io/" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317150f'/%3E%3Ccircle cx='32' cy='32' r='13' fill='%237a5cff'/%3E%3C/svg%3E" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Samuel Boucheron Seguin" />
 <meta property="og:title" content="Samuel Boucheron Seguin: projects &amp; resume" />
-<meta property="og:description" content="CS engineering student at CY Tech, seeking a 5–6 month software or data internship, mid-March to August 2027." />
+<meta property="og:description" content="CS engineering student at CY Tech, seeking a 5–6 month internship in any area of IT, ideally cybersecurity, mid-March to August 2027." />
 <meta property="og:url" content="https://samuelelelohim.github.io/" />
 <meta property="og:image" content="https://samuelelelohim.github.io/assets/img/og-card.png" />
 <meta property="og:image:width" content="1200" />
@@ -112,6 +112,10 @@
   .frame img.shot{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;
                   filter:brightness(.62) saturate(.75)}
   .frame img.shot.contain{object-fit:contain}
+  /* small app screenshot: a floating window on the right, capped at 2x native so it stays sharp */
+  .frame img.shot.window{inset:auto; top:50%; right:max(40px, calc((100vw - var(--max))/2 + 40px));
+                         transform:translateY(-50%); width:auto; height:min(78vh, 1024px);
+                         box-shadow:0 30px 80px rgba(0,0,0,.55)}
   /* small honesty caption, pinned to the panel's bottom-right corner */
   .frame-cap{position:absolute; right:max(40px, calc((100vw - var(--max))/2 + 40px)); bottom:5vh; z-index:2;
              max-width:32ch; text-align:right; font:500 .78rem/1.5 var(--sans);
@@ -128,8 +132,6 @@
   .txt-col{position:relative; z-index:2; padding-top:0; color:#fff; text-shadow:0 1px 30px rgba(0,0,0,.35)}
   .p-title{font:500 clamp(2.1rem,5.2vw,4rem)/1.03 var(--serif); letter-spacing:-.015em;
            margin:0; color:#fff; max-width:26ch}
-  .p-grade{font:700 .7rem/1 var(--mono); color:#fff; background:var(--accent); padding:5px 8px;
-           margin-left:12px; vertical-align:middle; letter-spacing:.04em; transition:background-color .6s ease}
   .p-meta{font:500 .95rem/1.5 var(--sans); color:rgba(255,255,255,.78); margin:16px 0 16px}
   .p-meta a{color:#fff; text-decoration:underline; text-underline-offset:3px;
             text-decoration-thickness:1px; text-decoration-color:var(--accent)}
@@ -151,6 +153,7 @@
     .frame-col{position:relative; inset:auto; aspect-ratio:16/10}
     .frame::before{background:linear-gradient(180deg, rgba(8,7,5,0) 55%, rgba(8,7,5,.9) 100%)}
     .frame img.shot{filter:none}
+    .frame img.shot.window{inset:0; transform:none; width:100%; height:100%; object-fit:contain; box-shadow:none}
     .frame.code{align-items:flex-start}
     .frame.code pre{font-size:11px; line-height:1.6; width:auto; padding:18px 22px 0}
     .txt-col{padding:28px 22px 0; text-shadow:none}
@@ -275,6 +278,7 @@
   .also-item .p-links a{color:var(--ink); border-bottom:1px solid var(--rule)}
   .also-item .p-links a:hover{border-bottom-color:var(--accent); color:var(--accent)}
   @media(max-width:640px){.also{padding:48px 0 4px} .also-grid{gap:32px}}
+  .about p{margin:8px 0 0; color:#2b271e; font:400 clamp(1.1rem,1.6vw,1.3rem)/1.6 var(--sans); max-width:68ch}
 </style>
 </head>
 <body>
@@ -294,7 +298,8 @@
     <div class="kicker">CS Engineering Student · CY Tech Pau</div>
     <h1 class="name"><span class="ln"><span>Samuel</span></span><span class="ln"><span>Boucheron Seguin</span></span></h1>
     <p class="role">A library of things I've built.</p>
-    <p class="ask">Seeking a <strong>5–6 month engineering internship</strong> in software or data,
+    <p class="ask">Seeking a <strong>5–6 month engineering internship</strong> in any area of IT,
+      ideally cybersecurity,
       <strong><span class="nw">mid-March</span> to August 2027</strong>, anywhere in Europe.</p>
     <div class="hero-cta">
       <a class="solid" href="resume.html">View resume</a>
@@ -318,7 +323,7 @@
       </div>
       <div class="txt-col">
         <h2 class="p-title">CYEDIN — Internship Platform</h2>
-        <div class="p-meta">Backend &amp; auth · Laravel + React · 3-person team · CY Tech · 2026 <span class="p-grade">15.5/20</span></div>
+        <div class="p-meta">Backend &amp; auth · Laravel + React · 3-person team · CY Tech · 2026</div>
         <div class="p-body">
           <p>A multi-role platform centralising internship search and management for
             students, companies and academic staff at once. The fragmentation it fixes
@@ -368,7 +373,7 @@
       </div>
       <div class="txt-col">
         <h2 class="p-title">Facial Recognition with PCA</h2>
-        <div class="p-meta">Technical Lead &amp; Lead Java Dev · 5-person team · CY Tech · 2025–26 <span class="p-grade">16.41/20</span></div>
+        <div class="p-meta">Technical Lead &amp; Lead Java Dev · 5-person team · CY Tech · 2025–26</div>
         <div class="p-body">
           <p>A Java/JavaFX system that identifies a person from a photo, or correctly
             <em>rejects</em> unknown faces, using the classic eigenfaces (PCA) method. I owned
@@ -469,14 +474,14 @@
     <div class="wrap">
       <div class="frame-col">
         <div class="frame has-img">
-          <img class="shot contain" src="assets/img/modelisation_foule.png"
+          <img class="shot window" src="assets/img/modelisation_foule.png"
                alt="Crowd evacuation simulation — the running app window" />
         </div>
         <div class="frame-cap">Real screenshot of the simulation</div>
       </div>
       <div class="txt-col">
         <h2 class="p-title">Crowd Evacuation Simulator</h2>
-        <div class="p-meta">Top contributor · Python · CY Tech · 2025 <span class="p-grade">17/20</span></div>
+        <div class="p-meta">Top contributor · Python · CY Tech · 2025</div>
         <div class="p-body">
           <p>An agent-based simulation of how a crowd evacuates a room, using a
             social-force model with real-time animation.</p>
@@ -513,14 +518,14 @@
     <div class="wrap">
       <div class="frame-col">
         <div class="frame has-img">
-          <img class="shot" src="assets/img/alb_main.png"
+          <img class="shot" src="assets/img/alb_main_upscale.webp"
                alt="Samedis Neige web app — Excel file-processing interface" />
         </div>
-        <div class="frame-cap">Real screenshot of the app</div>
+        <div class="frame-cap">AI-upscaled screenshot of the app, may contain artifacts</div>
       </div>
       <div class="txt-col">
         <h2 class="p-title">Samedis Neige — Association Web App</h2>
-        <div class="p-meta">Lead backend developer · PHP · 4-person team · CY Tech · 2025 <span class="p-grade">16/20</span></div>
+        <div class="p-meta">Lead backend developer · PHP · 4-person team · CY Tech · 2025</div>
         <div class="p-body">
           <p>A web app automating ski-trip logistics for a 1,213-member sports
             association, turning three data files into attendance sheets and skill-level groups.</p>
@@ -602,7 +607,7 @@
     <div class="wrap">
       <div class="frame-col">
         <div class="frame has-img">
-          <img class="shot" src="assets/img/robot-macdo.png"
+          <img class="shot" src="assets/img/robot-macdo_upscale.webp"
                alt="Robot MacDo — published game title screen" />
         </div>
         <div class="frame-cap">Title screen of the published game</div>
@@ -651,6 +656,21 @@
       </div>
 
     </div>
+  </div>
+</section>
+
+<section class="also about">
+  <div class="wrap">
+    <div class="kicker">About me</div>
+    <p>I got into computer science because I wanted to make video games, and
+      published my first small one as a kid. The games industry turned out not to
+      be where I wanted to work, but building software stayed, and my interest
+      moved towards cyber defence. That interest faded a bit during my studies
+      until my first CTF brought the fun of it straight back. I'm learning
+      Norwegian and hope to build my career in the Nordics, so an internship in
+      Norway or Sweden would be ideal, though I'm happy to go wherever the work is
+      good. Whatever the role, I want to keep
+      learning, and if it brings me closer to security, even better.</p>
   </div>
 </section>
 
